@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <!-- Add the Leaflet JavaScript library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+</head>
+<body>
+<div id="map" style="width: 900px; height: 600px"></div>
+<script>
+    // Create variable to hold map element, give initial settings to map
+    var map = L.map('map',{ center: [44.56576, -123.27888], zoom: 16});
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    var myDataPoint = L.marker([44.56822, -123.28034]).addTo(map);
+    var myDataLine = L.polyline([[44.5656915, -123.2775289], [44.5656992, -123.2778923], [44.5662266, -123.2778722], [44.5682559, -123.2778293], [44.5682445, -123.2800823]],
+        {color: 'red', weight: 5}).addTo(map);
+    var myArea = L.polygon([[44.5651985, -123.2769978],[44.566131, -123.2769978], [44.5661339, -123.2775027], [44.5651985, -123.2775182], [44.5651985, -123.2769978],],
+        {color: 'orange', weight: 5}).addTo(map);
+    myDataPoint.bindPopup("<h3>Wilkinson Hall</h3><p>Corvallis, Oregon<br>College of Earth, Ocean, and Atmostpheric Sciences</p>");
+
+    myDataLine.bindPopup("The route from Wilkinson Hall to Strand Ag Hall.");
+    // Bind popup to area object
+    myArea.bindPopup("Strand Ag Hall");
+    var popup = L.popup();
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+    }
+
+    // Listen for a click event on the Map element
+    map.on('click', onMapClick);
+    L.geoJson.ajax("geog371.geojson").addTo(map);
+    // load GeoJSON from an external file
+    L.geoJson.ajax("geog371.geojson", {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(feature.properties.name);
+        }
+    }).addTo(map);
+
+</script>
+</body>
+</html>
