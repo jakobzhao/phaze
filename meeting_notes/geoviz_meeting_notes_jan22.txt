@@ -1,0 +1,7 @@
+- We went over my progress on the tasks assigned to me the previous week.
+
+- We discussed the general flow of data from the devices to the weather hub to the web map. One roadblock that we found was that the data from the devices was going straight to Google Drive, but we wanted it to go to MongoDB in order to more easily put it onto the map.
+
+- We discussed creating a program to transfer data from Google Drive to MongoDB.
+
+- We discussed my next steps. Over the next week, I would start designing the interface by going through the interface design tutorials, and I would also add to the architecture design that I created last week.

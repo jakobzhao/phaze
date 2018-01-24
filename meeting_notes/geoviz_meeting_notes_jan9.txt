@@ -1,0 +1,17 @@
+- There are 4 tiers involved in the system architecture for this project. They are: the data tier, the service tier, the Proxy/server tier and the client tier.
+
+- The data tier involves the data from the database. Also, since the basemap on which the data will be displayed is composed of data, the basemap is also a part of the data tier.
+
+- The service tier involves the server. The purpose of this is to interpret the data for the client.
+
+-The proxy/server tier produces data that the client can parse. For the purposes of the project, we will stick to Heroku.
+
+- The client tier involves the interface with the client and the main focus of this tier is to make sure that the interface is easy to use. This will be the most coding-intensive portion of the project. 
+
+- The major components of the data tier are: the basemap, the parsing of the data to be readable by the map, and  getting the database to push the data into the socket. The basemap gives context to the local area where the data will be modeled.
+
+-There are several datasets for the data tier. They are: The variables of the sensors collecting data, the legend, the weather data being collected, and a brief description of the research forest.
+
+- We discussed spatial and time contexts for the web map. We decided that we could use leaflet to create a timeline so a user can scroll back and see previous maps. Also, we discussed setting up maps for daily, weekly and monthly trends.
+
+- We decided that our next steps would be to test the workflow of socket.io to make sure that we understand it properly and to create a design for the interface.

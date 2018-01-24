@@ -1,0 +1,13 @@
+- I had not yet finished testing out the workflow of the project so I received some guidance on that.
+
+- I had drafted up a preliminary sketch of how the webpage would look. We discussed adding more features to the webpage, such as bar charts and raw data plotting.
+
+We also went over some questions that I had. Below is what we determined from the meeting:
+
+- We were not sure how many devices would be deployed, but for now we decided that there would be at least 5.
+
+- We discussed the possibility of a state diagram for our project. We decided that this would not be necessary yet.
+
+- We examined whether we would map the data straight from Google Drive or if we would transfer the data to MongoDB first and map it from there. In its current state, the data is sent directly from the device to a Google Drive document.
+
+- We decided that our next steps would be to finish testing out the workflow of the project and to consider adding different visualization graphics to the web page such as bar charts and raw data.
