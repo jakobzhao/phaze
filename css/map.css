@@ -1,0 +1,21 @@
+html{
+    margin: auto;
+    width: 1000px;
+}
+
+
+#forest_info{
+    border-style: solid;
+    border-width: 1px;
+    padding: 5px;
+
+}
+
+#legend
+    width: 100px;
+    height: 60px;
+    color: blue;
+    border-style: solid;
+    border-width: 1px;
+}
+
