@@ -19,6 +19,11 @@
   <!-- leaflet link-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 
+
+  <script src = "https://d3js.org/d3.v4.min.js"></script>
+  <script src = "https://d3js.org/d3.v4.js"></script>
+  <script src="billboard.js"></script>
+  <link rel="stylesheet" href="billboard.css">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -60,12 +65,12 @@
       </ol>
 
 
-      <!-- Area Chart Example-->
+      <!-- Line Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i> Area Chart</div>
+          <i class="fa fa-area-chart"></i> Line Chart</div>
         <div class="card-body">
-          <svg id="myAreaChart" width="100%" height="30"></svg>
+          <div id = "line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
@@ -78,19 +83,7 @@
 
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-8 my-auto">
-                  <svg id="myBarChart" width="100" height="50"></svg>
-                </div>
-                <div class="col-sm-4 text-center my-auto">
-                  <div class="h4 mb-0 text-primary">$34,693</div>
-                  <div class="small text-muted">YTD Revenue</div>
-                  <hr>
-                  <div class="h4 mb-0 text-warning">$18,474</div>
-                  <div class="small text-muted">YTD Expenses</div>
-                  <hr>
-                  <div class="h4 mb-0 text-success">$16,219</div>
-                  <div class="small text-muted">YTD Margin</div>
-                </div>
+                <div id="bar_chart"></div>
               </div>
             </div>
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
@@ -99,19 +92,7 @@
 
           <!-- /Card Columns-->
         </div>
-        <div class="col-lg-4">
-          <!-- Example Pie Chart Card-->
-          <div class="card mb-3">
-            <div class="card-header">
-              <i class="fa fa-pie-chart"></i> Pie Chart</div>
-            <div class="card-body">
-              <svg id="myPieChart" width="100%" height="100"></svg>
-            </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-          </div>
-          <!-- Example Notifications Card-->
 
-        </div>
       </div>
       <!-- Example DataTables Card-->
       <div class="card mb-3">
@@ -642,23 +623,39 @@
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/d3/d3.js"></script>
+
     <script src="vendor/datatables/jquery.dataTables.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/d3.min.js"></script>
+
 
 
   </div>
 
 
   <script>
-  var svg = d3.select("body").append("svg")
-  .attr("height","100%")
-  .attr("width","100%");
+      bb.generate({
+          bindto: "#bar_chart",
+          data: {
+              type: "bar",
+              columns: [
+                  ["Rainfall", .30, .75, .100, 1.70, 1.50, 1.30]
+              ]
+          }
+      });
+
+      bb.generate({
+          bindto: "#line_chart",
+          data: {
+              type: "line",
+              columns: [
+                  ["Humidity(%)", 74, 68, 83, 79, 56, 72]
+              ]
+          }
+      });
   </script>
 
 
@@ -671,10 +668,12 @@
           // data streaming source connector
           var socket = io.connect('http://localhost:');
 
-          socket.on('join5', function(data){
+          socket.on('join', function(data){
 
 
               console.log(data);
+
+              return;
 
           });
 
