@@ -636,27 +636,7 @@
   </div>
 
 
-  <script>
-      bb.generate({
-          bindto: "#bar_chart",
-          data: {
-              type: "bar",
-              columns: [
-                  ["Rainfall", .30, .75, .100, 1.70, 1.50, 1.30]
-              ]
-          }
-      });
 
-      bb.generate({
-          bindto: "#line_chart",
-          data: {
-              type: "line",
-              columns: [
-                  ["Humidity(%)", 74, 68, 83, 79, 56, 72]
-              ]
-          }
-      });
-  </script>
 
 
 
@@ -664,19 +644,49 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
 
-
+          var Humidity = [];
+          var TempC = [];
           // data streaming source connector
           var socket = io.connect('http://localhost:');
 
           socket.on('join', function(data){
 
+          for(i = 0; i < 500; i++) {
+              var measuredHumidity = data.features[i].properties.Field5;
+              Humidity.push(measuredHumidity);
+              var measuredTempC = data.features[i].properties.Field4;
+              TempC.push(measuredTempC);
+          }
 
-              console.log(data);
 
-              return;
 
+
+
+          bb.generate({
+              bindto: "#bar_chart",
+              data: {
+                  type: "bar",
+                  columns: [
+                      TempC
+                  ]
+              }
           });
 
+
+
+          bb.generate({
+              bindto: "#line_chart",
+              data: {
+                  type: "line",
+                  columns: [
+                      Humidity
+                  ]
+              }
+          });
+
+
+          //end of socket stuff
+          });
 
   </script>
 </body>
