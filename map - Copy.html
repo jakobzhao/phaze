@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Web Map</title>
+    <link rel = "stylesheet" href = "map.css">
+</head>
+
+<body>
+<div id = "forest_info">
+    <h3>H.J. Andrews Experimental Forest Information</h3>
+    The H.J. Andrews Experimental Forest is a large forest in the Central Cascades in Oregon, encompassing 16,000 acres. The forest is managed by both Oregon State University and the United States Forest Service. The forest was first designated as an experimental forest in 1948. It is used to study weather patterns, geological features such as rivers and forest, and ecosystems.
+</div>
+
+<form action="charts.html">
+    <input type="submit" value="Charts" />
+</form>
+
+
+<div id = "legend">
+
+Legend
+
+</div>
+
+<h3>Web Map</h3>
+<div id="slider" >
+    <input type="range" step="1" min="1" max="5"  id="myRange" list = "marks">
+
+</div>
+<div id = "map">
+<img src = "real-time-map.png" width = "900" height = "700">
+</div>
+
+</body>
+</html>
