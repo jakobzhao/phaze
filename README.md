@@ -1,5 +1,7 @@
 # [Start Bootstrap - SB Admin](https://startbootstrap.com/template-overviews/sb-admin/)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jakobzhao/phaze.svg?token=da94b1994816485c5542ea5290db52815e1d3f4d9000e1c50dba24e333bf7bd2&ts=1520372261905)](https://greenkeeper.io/)
+
 [SB Admin](http://startbootstrap.com/template-overviews/sb-admin/) is an open source, admin dashboard template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
 
 ## Preview
