@@ -1,1 +1,1 @@
-web: py2csv.py node app.js
+web: node app.js
