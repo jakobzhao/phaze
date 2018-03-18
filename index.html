@@ -729,9 +729,11 @@ $(document).ready(function(){
           }
 		
 
-
-
-
+		var temp_Humidity = Humidity;
+		var temp_TempC = TempC;
+		var temp_LoadCell = LoadCell;
+		var temp_IRLight = IRLight;
+		var temp_FullLight = FullLight;
           bb.generate({
               bindto: "#humid_line_chart",
               data: {
@@ -781,14 +783,38 @@ $(document).ready(function(){
                   ]
               }
           });
-          });
+         
 
 
-
+		  
           
           L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoianJvdGl0aG9yIiwiYSI6ImNqZG5wOXV4NjEwd2ozM280NGZ1Z3ZqM3YifQ.eSmbwYj_2WaWqgBCFOZxuA").addTo(map);
-		  L.marker([44.2162295, -122.2519102]).addTo(map);
-},3000);
+		  
+		  var marker_color = "blue";
+		  console.log(temp_Humidity);
+		  if(temp_Humidity[100] <= 30){
+				marker_color = "red";
+		  }
+		  else if(temp_Humidity[100] > 30 && temp_Humidity[100] <= 50){
+				marker_color = "Orange";
+		  }
+		  else if(temp_Humidity[100] > 50 && temp_Humidity[100] <= 70){
+				marker_color = "Yellow";
+		  }
+		  else if(temp_Humidity[100] > 70){
+				marker_color = "Green";
+		  }
+		  var marker = L.circle([44.2162295, -122.2519102],{
+		    color: marker_color,
+			fillColor: marker_color,
+			fillOpacity: 1,
+			radius: 1000
+		  
+		  }
+		  ).addTo(map);
+		   });
+
+},10000);
 });
 		  
 
