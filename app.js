@@ -12,7 +12,7 @@ var fs = require('fs');
 
 
 
-server.listen(80)
+server.listen(process.env.PORT || 5040)
 
 app.use(express.static(__dirname ));
 
