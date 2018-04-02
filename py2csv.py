@@ -26,4 +26,4 @@ while True:
 		writer.writerows(worksheet.get_all_values())
 		
 	print("got here")	
-	time.sleep(3);
+	time.sleep(180);
