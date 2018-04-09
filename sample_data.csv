@@ -159,3 +159,6 @@ Date,Node ID,Time Stamp,Temperature (C),Relative Humidity % ,Load Cell,IR Spec,F
 3/21/2018,100,time,temp,humid,load,ir,full,bat,-77
 3/21/2018,100,time,temp,humid,load,ir,full,bat,-77
 3/21/2018,100,time,temp,humid,load,ir,full,bat,-88
+4/6/2018,100,time,temp,humid,load,ir,full,bat,-93
+4/6/2018,100,time,temp,humid,load,ir,full,bat,-96
+4/6/2018,100,time,temp,humid,load,ir,full,bat,-95
