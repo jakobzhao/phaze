@@ -274,7 +274,7 @@ $(document).ready(function(){
 		  console.log(selection);	
 	
 			
-          var Humidity = ["Humidity(%)"];
+          var Humidity = ["Time"];
           var TempC = ["Temperature(degrees Celsius)"];
 		  var LoadCell = ["Load Cell"]
 		  var IRLight = ["Infrared Light"]
@@ -305,15 +305,26 @@ $(document).ready(function(){
 		var temp_LoadCell = LoadCell;
 		var temp_IRLight = IRLight;
 		var temp_FullLight = FullLight;
-          bb.generate({
+        var humid_chart = bb.generate({
               bindto: "#humid_line_chart",
+
               data: {
                   type: "line",
                   columns: [
                       Humidity
                   ]
-              }
+              },
+			  	axis:{
+				"Time":{
+				         type: "timeseries",
+						 min:  "2017-02-15",
+						 max:  "2017-07-15"
+
+
+				}
+			  }
           });
+		
 		
 		bb.generate({
               bindto: "#temp_line_chart",
