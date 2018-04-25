@@ -1,4 +1,11 @@
+<!-- 
+	File name: index.html
+	Author: Jaydeep Rotithor
+	Description: This file contains the code used to generate the Geovisualization charts. It also contains the client file that recieves data from the app.js server file. It takes in the data, displays it on the web map, and then plots it on the charts, which update in real time.
+-->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -131,13 +138,18 @@
         </li>
         <li class="breadcrumb-item active">My Dashboard</li>
       </ol>
+	  
+	  <!--clickable buttons for user to select desired measurement-->
 	  <div id="buttons">
 		<button type="button" id="temperature_select">Temperature</button>
 		<button type="button" id="humidity_select">Humidity</button>
 		<button type="button" id="loadcell_select">Load Cell</button>
-		<button type="button" id="ir_light_select">Infrared Light</button>
-		<button type="button" id="full_light_select">Full Light</button>
+		<button type="button" id="battery_voltage_select">Battery Voltage</button>
+		<button type="button" id="elec_cond_select">Electric Conductivity</button>
 	  </div>
+	  <!--
+	  The following code generates the charts, one for each measurement.
+	  -->
       <div id="map_section">
         <div class="card-header">
           <i class="fa fa-table"></i> Web Map</div>
@@ -173,30 +185,24 @@
 	  
 	   <div class="card-mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>Infrared Light</div>
+          <i class="fa fa-area-chart"></i>Battery Voltage</div>
         <div class="card-body">
-          <div id = "ir_line_chart"></div>
+          <div id = "bv_line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
  
     <div class="card-mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>Full Light</div>
+          <i class="fa fa-area-chart"></i>Electric Conductivity</div>
         <div class="card-body">
-          <div id = "full_light_line_chart"></div>
+          <div id = "elec_cond_line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
  
 
-          <!-- Card Columns Example Social Feed-->
-
-          <!-- /Card Columns-->
-
-
-
-      <!-- Example DataTables Card-->
+    
       
     </div>
     <!-- /.container-fluid-->
@@ -252,11 +258,13 @@ var map = L.map('map1').setView([44.21, -122.256], 10);
 var marker_color_list = ["Red", "Orange", "Yellow", "Green"];
 var selection = "humidity"
 
+//sets up a flag based on the button the user clicked
+
 document.getElementById("temperature_select").addEventListener("click", function(){select_var("temperature");});
 document.getElementById("humidity_select").addEventListener("click", function(){select_var("humidity");});
 document.getElementById("loadcell_select").addEventListener("click", function(){select_var("loadcell");});
-document.getElementById("ir_light_select").addEventListener("click", function(){select_var("ir_light");});
-document.getElementById("full_light_select").addEventListener("click", function(){select_var("full_light");});
+document.getElementById("battery_voltage_select").addEventListener("click", function(){select_var("battery_voltage");});
+document.getElementById("elec_cond_select").addEventListener("click", function(){select_var("elec_cond");});
 
 function select_var(measurement){
 	selection = measurement
@@ -265,6 +273,8 @@ function select_var(measurement){
 
 var legend = L.control({position: 'topright'});
 
+
+//automatically refresh the page every 10 seconds
 $(document).ready(function(){
 
 	
@@ -272,57 +282,118 @@ $(document).ready(function(){
 	setInterval(function(){
 			
 		  console.log(selection);	
-	
-			
-          var Humidity = ["Time"];
+		  //initialize arrays with chart description names
+		  var Date_arr = ["dates"];	
+          var Humidity = ["Humidity"];
           var TempC = ["Temperature(degrees Celsius)"];
 		  var LoadCell = ["Load Cell"]
-		  var IRLight = ["Infrared Light"]
-		  var FullLight = ["Full Light"]
+		  var BatteryVoltage = ["Battery Voltage"]
+		  var ElecCond = ["Electric Conductivity"]
           // data streaming source connector
           var socket = io.connect('/');
-	
+		  //opens up socket for client
           socket.on('join', function(data){
 			
 		  console.log(data);
-			
+		  //reads data into arrays initialized above 	
           for(i = 0; i < data.length; i++) {
-              var measuredHumidity = data[i]['Relative Humidity % '];
+			  if(data[i]['IDtag'] == "100"){
+			  var ds = data[i]['RTC_time'];
+			  var month = "03";
+			  var day = "05";
+			  //grabs every 5th element because of limited space on x-axis
+			  if(i % 5 == 0){
+			
+				//converts the format used by the spreadsheet to the timeseries format
+			/*	
+				if(ds.indexOf("/") > 0){
+				if(ds.indexOf("/") - ds.indexOf("_") == 2){
+					month = ds.charAt(ds.indexOf("_") + 1);
+				}
+				else{
+					month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
+				}
+				
+				}
+				if(ds[5] == "/"){
+					day = ds.substring(6);
+					if(day.length == 1){
+					day = "0" + day;
+					}
+				}
+				else if(ds[6] == "/"){
+					day = ds.substring(7);
+					if(day.length == 1){
+					day = "0" + day;
+					}
+				}
+				else if(ds[7] == "/"){
+					day = ds.substring(8);
+					if(day.length == 1){
+					day = "0" + day;
+					}
+				}
+				else if(ds[8] == "/"){
+					day = ds.substring(9);
+					if(day.length == 1){
+					day = "0" + day;
+					}
+				}
+				
+				*/
+				var ts = "2018-" + month + "-" + day;
+			  
+				Date_arr.push(ts);
+				
+				}
+			  //pushes rest of data
+              var measuredHumidity = data[i]['humidity'];
               Humidity.push(measuredHumidity);
-              var measuredTempC = data[i]['Temperature (C)'];
+              var measuredTempC = data[i]['temp'];
               TempC.push(measuredTempC);
-			  var measuredLoadCell = data[i]['Load Cell'];
+			  var measuredLoadCell = data[i]['loadCell'];
               LoadCell.push(measuredLoadCell);
-			  var measuredIRLight = data[i]['IR Spec'];
-              IRLight.push(measuredIRLight);
-			  var measuredFullLight = data[i]['Full Spec'];
-              FullLight.push(measuredFullLight);
+			  var measuredBatteryVoltage = data[i]['vbat'];
+              BatteryVoltage.push(measuredBatteryVoltage);
+			  var measuredElecCond = data[i]['ElecCond'];
+              ElecCond.push(measuredElecCond);
           }
-		
-
+		}
+		//saves data into another array so that a backup is left after the original is used by billboard.js(billboard.js uses the pop function which removes data from the array permanently)
 		var temp_Humidity = Humidity;
 		var temp_TempC = TempC;
 		var temp_LoadCell = LoadCell;
-		var temp_IRLight = IRLight;
-		var temp_FullLight = FullLight;
+		var temp_BatteryVoltage = BatteryVoltage;
+		var temp_ElecCond = ElecCond;
+		console.log(Date_arr);
+		
+		//generate the actual charts
         var humid_chart = bb.generate({
               bindto: "#humid_line_chart",
+			  
 
               data: {
+				 // "x" : "dates",
                   type: "line",
-                  columns: [
-                      Humidity
-                  ]
-              },
-			  	axis:{
-				"Time":{
-				         type: "timeseries",
-						 min:  "2017-02-15",
-						 max:  "2017-07-15"
-
-
+                  columns:
+				  [
+                      Humidity,
+				//	  Date_arr
+				 ],
+				
+				  
+              }/*,
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						format:  "%Y-%m-%d",
+						
+					}
 				}
-			  }
+				
+			  }*/
           });
 		
 		
@@ -347,33 +418,33 @@ $(document).ready(function(){
           });
 		  
 		 bb.generate({
-              bindto: "#ir_line_chart",
+              bindto: "#bv_line_chart",
               data: {
                   type: "line",
                   columns: [
-                      IRLight
+                      BatteryVoltage
                   ]
               }
           });
 
 		   bb.generate({
-              bindto: "#full_light_line_chart",
+              bindto: "#elec_cond_line_chart",
               data: {
                   type: "line",
                   columns: [
-                      FullLight
+                      ElecCond
                   ]
               }
           });
          
 
 
-		  
+		  //set the map background
           
           L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoianJvdGl0aG9yIiwiYSI6ImNqZG5wOXV4NjEwd2ozM280NGZ1Z3ZqM3YifQ.eSmbwYj_2WaWqgBCFOZxuA").addTo(map);
 		 
 		
-		  
+		  //set the legend fields based on the measurement selected by the user
 		  var marker_color = "blue";
 		  var select_list;
 		  var legend_buckets;
@@ -391,30 +462,31 @@ $(document).ready(function(){
 				select_list = temp_LoadCell;
 				legend_buckets = [-1,-.5,0];
 				break;
-		  case "ir_light":
-				select_list = temp_IRLight;
+		  case "battery_voltage":
+				select_list = temp_BatteryVoltage;
 				legend_buckets = [0,20,40];
 				break;
-		  case "full_light":
-				select_list = temp_FullLight;
+		  case "elec_cond":
+				select_list = temp_ElecCond;
 				legend_buckets = [0,100,200]
 				break;
 				
 		  }
 		  
-		  console.log(temp_Humidity);
-		  if(select_list[100] <= legend_buckets[0]){
+		 select_index = 70
+		  if(select_list[select_index] <= legend_buckets[0]){
 				marker_color = marker_color_list[0];
 		  }
-		  else if(select_list[100] > legend_buckets[0] && select_list[100] <= legend_buckets[1]){
+		  else if(select_list[select_index] > legend_buckets[0] && select_list[select_index] <= legend_buckets[1]){
 				marker_color = marker_color_list[1];
 		  }
-		  else if(select_list[100] > legend_buckets[1] && select_list[100] <= legend_buckets[2]){
+		  else if(select_list[select_index] > legend_buckets[1] && select_list[select_index] <= legend_buckets[2]){
 				marker_color = marker_color_list[2];
 		  }
-		  else if(select_list[100] > legend_buckets[2]){
+		  else if(select_list[select_index] > legend_buckets[2]){
 				marker_color = marker_color_list[3];
 		  }
+		  //add the marker to the map
 		  var marker = L.circle([44.2162295, -122.2519102],{
 		    color: marker_color,
 			fillColor: marker_color,
@@ -434,6 +506,7 @@ $(document).ready(function(){
 		  var div;
 		  div = L.DomUtil.create('div', 'legend');
 		  div.innerHTML = '';
+		  //create a legend customized for the measurement selected by the user
 		  switch(selection){
 		    
 			case "temperature":
@@ -461,15 +534,15 @@ $(document).ready(function(){
 				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><-1</p>';
 				break;
 				
-			case "ir_light":
-				div.innerHTML += '<b>IRLight</b><br />';
+			case "battery_voltage":
+				div.innerHTML += '<b>Battery Voltage</b><br />';
 				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p><40+</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>20-40</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>0-20</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><0</p>';
 				break;
-			case "full_light":
-				div.innerHTML += '<b>FullLight</b><br />';
+			case "elec_cond":
+				div.innerHTML += '<b>Electric Conductivity</b><br />';
 				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p>200+</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>100-200</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>0-100</p>';

@@ -1,3 +1,6 @@
+//Author: Jaydeep Rotithor
+//Description: Client file that creates a socket connection to the web map page and sends data through it in real time
+
 var express = require('express');
 var app = express();
 var $ = jQuery = require('jquery');
@@ -12,14 +15,14 @@ var p = spawn("python", ["py2csv.py"], {detached: true});
 
 
 
-
+//Listens on port 5040 to avoid collisions with existing processes
 server.listen(process.env.PORT || 5040)
 
 app.use(express.static(__dirname ));
 
 
 
-
+	//creates the socket connection and sends the data from the csv file through it
     io.sockets.on('connection', function (socket) {
 
 			
