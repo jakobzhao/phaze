@@ -1,7 +1,7 @@
 #Author: Jaydeep Rotithor
 #Description: A python script that is used in order to extract data from the Google Spreadsheet into a csv file
 
-import urllib.request
+
 import time
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
