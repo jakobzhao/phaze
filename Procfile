@@ -1,2 +1,2 @@
 web: node app.js
-worker: python py2csv.py
+worker: python_runner.js
