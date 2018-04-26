@@ -1,6 +1,0 @@
-gspread/setup.py
-gspread.egg-info/PKG-INFO
-gspread.egg-info/SOURCES.txt
-gspread.egg-info/dependency_links.txt
-gspread.egg-info/requires.txt
-gspread.egg-info/top_level.txt
