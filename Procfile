@@ -1,2 +1,2 @@
 web: node app.js
-worker: python_runner.js
+worker: node python_runner.js
