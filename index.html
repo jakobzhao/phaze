@@ -281,7 +281,7 @@ $(document).ready(function(){
 	
 	setInterval(function(){
 			
-		  console.log(selection);	
+		  //console.log(selection);	
 		  //initialize arrays with chart description names
 		  var Date_arr = ["dates"];	
           var Humidity = ["Humidity"];
@@ -294,7 +294,7 @@ $(document).ready(function(){
 		  //opens up socket for client
           socket.on('join', function(data){
 			
-		  console.log(data);
+		  //console.log(data);
 		  //reads data into arrays initialized above 	
           for(i = 0; i < data.length; i++) {
 			  if(data[i]['IDtag'] == "100"){
@@ -302,50 +302,25 @@ $(document).ready(function(){
 			  var month = "03";
 			  var day = "05";
 			  //grabs every 5th element because of limited space on x-axis
-			  if(i % 5 == 0){
+			//  if(i % 5 == 0){
 			
 				//converts the format used by the spreadsheet to the timeseries format
-			/*	
-				if(ds.indexOf("/") > 0){
-				if(ds.indexOf("/") - ds.indexOf("_") == 2){
-					month = ds.charAt(ds.indexOf("_") + 1);
-				}
-				else{
-					month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
-				}
 				
-				}
-				if(ds[5] == "/"){
-					day = ds.substring(6);
-					if(day.length == 1){
-					day = "0" + day;
-					}
-				}
-				else if(ds[6] == "/"){
-					day = ds.substring(7);
-					if(day.length == 1){
-					day = "0" + day;
-					}
-				}
-				else if(ds[7] == "/"){
-					day = ds.substring(8);
-					if(day.length == 1){
-					day = "0" + day;
-					}
-				}
-				else if(ds[8] == "/"){
-					day = ds.substring(9);
-					if(day.length == 1){
-					day = "0" + day;
-					}
-				}
+			
+				month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
 				
-				*/
-				var ts = "2018-" + month + "-" + day;
-			  
+				day = ds.substring(ds.indexOf("/") + 1);
+				
+				hour = ds.substring(0, ds.indexOf(":"));
+				
+				minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
+		
+					
+				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
+			   
 				Date_arr.push(ts);
 				
-				}
+				//}
 			  //pushes rest of data
               var measuredHumidity = data[i]['humidity'];
               Humidity.push(measuredHumidity);
@@ -365,76 +340,128 @@ $(document).ready(function(){
 		var temp_LoadCell = LoadCell;
 		var temp_BatteryVoltage = BatteryVoltage;
 		var temp_ElecCond = ElecCond;
-		console.log(Date_arr);
 		
+		//console.log(Date_arr);
 		//generate the actual charts
         var humid_chart = bb.generate({
               bindto: "#humid_line_chart",
 			  
 
               data: {
-				 // "x" : "dates",
+				  "x" : "dates",
                   type: "line",
                   columns:
 				  [
                       Humidity,
-				//	  Date_arr
+					  Date_arr
 				 ],
 				
 				  
-              }/*,
+              },
 			 axis:{
 			  
 			  "x":{
 					type: "timeseries",
 					tick:{
-						format:  "%Y-%m-%d",
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
 						
 					}
 				}
 				
-			  }*/
+			  }
           });
 		
 		
 		bb.generate({
               bindto: "#temp_line_chart",
               data: {
+				  "x" : "dates",
                   type: "line",
                   columns: [
-                      TempC
+                      TempC,
+					  Date_arr
                   ]
-              }
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
           });
 		
 		bb.generate({
               bindto: "#loadcell_line_chart",
               data: {
+				  "x" : "dates",
                   type: "line",
                   columns: [
-                      LoadCell
+                      LoadCell,
+					  Date_arr
                   ]
-              }
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
           });
 		  
 		 bb.generate({
               bindto: "#bv_line_chart",
               data: {
+				  "x" : "dates",
                   type: "line",
                   columns: [
-                      BatteryVoltage
+                      BatteryVoltage,
+					  Date_arr
                   ]
-              }
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
           });
 
 		   bb.generate({
               bindto: "#elec_cond_line_chart",
               data: {
+			      "x" : "dates",
                   type: "line",
                   columns: [
-                      ElecCond
+                      ElecCond,
+					  Date_arr
                   ]
-              }
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
           });
          
 
