@@ -409,7 +409,7 @@ $(document).ready(function(){
 		  
 		  }
 		}
-		console.log(Date_arr)
+		//console.log(Date_arr)
 		//saves data into another array so that a backup is left after the original is used by billboard.js(billboard.js uses the pop function which removes data from the array permanently)
 		var temp_Humidity = Humidity;
 		var temp_TempC = TempC;
@@ -721,7 +721,7 @@ $(document).ready(function(){
 				marker_color = marker_color_list[3];
 		  }
 		  
-		  select_index2 = Date_arr2.length - 1;
+		  select_index = Date_arr2.length - 1;
 		  if(select_list2[select_index] <= legend_buckets[0]){
 				marker_color2 = marker_color_list[0];
 		  }
