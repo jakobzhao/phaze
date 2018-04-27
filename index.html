@@ -159,48 +159,90 @@
       <!-- Line Chart Example-->
 	   <div class="card-mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>Temperature(C)</div>
+          <i class="fa fa-area-chart"></i>Device 1 Temperature(C)</div>
         <div class="card-body">
           <div id = "temp_line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
+	  <div class="card-mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i>Device 2 Temperature(C)</div>
+        <div class="card-body">
+          <div id = "temp2_line_chart"></div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
       <div class="card-mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>Humidity</div>
+          <i class="fa fa-area-chart"></i>Device 1 Humidity</div>
         <div class="card-body">
           <div id = "humid_line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
-
+	  <div class="card-mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i>Device 2 Humidity</div>
+        <div class="card-body">
+          <div id = "humid2_line_chart"></div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+	  
+	  
 	   <div class="card-mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>Load Cell</div>
+          <i class="fa fa-area-chart"></i>Device 1 Load Cell</div>
         <div class="card-body">
           <div id = "loadcell_line_chart"></div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+	    <div class="card-mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i>Device 2 Load Cell</div>
+        <div class="card-body">
+          <div id = "loadcell2_line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
 	  
 	   <div class="card-mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>Battery Voltage</div>
+          <i class="fa fa-area-chart"></i>Device 1 Battery Voltage</div>
         <div class="card-body">
           <div id = "bv_line_chart"></div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+	  
+	   <div class="card-mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i>Device 2 Battery Voltage</div>
+        <div class="card-body">
+          <div id = "bv2_line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
  
     <div class="card-mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>Electric Conductivity</div>
+          <i class="fa fa-area-chart"></i>Device 1 Electric Conductivity</div>
         <div class="card-body">
           <div id = "elec_cond_line_chart"></div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
  
+ <div class="card-mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i>Device 2 Electric Conductivity</div>
+        <div class="card-body">
+          <div id = "elec_cond2_line_chart"></div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
 
     
       
@@ -286,9 +328,16 @@ $(document).ready(function(){
 		  var Date_arr = ["dates"];	
           var Humidity = ["Humidity"];
           var TempC = ["Temperature(degrees Celsius)"];
-		  var LoadCell = ["Load Cell"]
-		  var BatteryVoltage = ["Battery Voltage"]
-		  var ElecCond = ["Electric Conductivity"]
+		  var LoadCell = ["Load Cell"];
+		  var BatteryVoltage = ["Battery Voltage"];
+		  var ElecCond = ["Electric Conductivity"];
+		  
+		  var Humidity2 = ["Humidity"];
+		  var TempC2 = ["Temperature(degrees Celsius)"];
+		  var LoadCell2 = ["Load Cell"];
+		  var BatteryVoltage2 =  ["Battery Voltage"];
+		  var ElecCond2 = ["Electric Conductivity"];
+		  
           // data streaming source connector
           var socket = io.connect('/');
 		  //opens up socket for client
@@ -297,23 +346,22 @@ $(document).ready(function(){
 		  //console.log(data);
 		  //reads data into arrays initialized above 	
           for(i = 0; i < data.length; i++) {
-			  if(data[i]['IDtag'] == "100"){
+			  
 			  var ds = data[i]['RTC_time'];
-			  var month = "03";
-			  var day = "05";
+			  
 			  //grabs every 5th element because of limited space on x-axis
 			//  if(i % 5 == 0){
 			
 				//converts the format used by the spreadsheet to the timeseries format
 				
 			
-				month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
+				var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
 				
-				day = ds.substring(ds.indexOf("/") + 1);
+				var day = ds.substring(ds.indexOf("/") + 1);
 				
-				hour = ds.substring(0, ds.indexOf(":"));
+				var hour = ds.substring(0, ds.indexOf(":"));
 				
-				minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
+				var minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
 		
 					
 				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
@@ -322,6 +370,7 @@ $(document).ready(function(){
 				
 				//}
 			  //pushes rest of data
+			  if(data[i]['IDtag'] == "100"){
               var measuredHumidity = data[i]['humidity'];
               Humidity.push(measuredHumidity);
               var measuredTempC = data[i]['temp'];
@@ -333,6 +382,19 @@ $(document).ready(function(){
 			  var measuredElecCond = data[i]['ElecCond'];
               ElecCond.push(measuredElecCond);
           }
+		  else if(data[i]['IDtag'] == "200"){
+		   var measuredHumidity = data[i]['humidity'];
+              Humidity2.push(measuredHumidity);
+              var measuredTempC = data[i]['temp'];
+              TempC2.push(measuredTempC);
+			  var measuredLoadCell = data[i]['loadCell'];
+              LoadCell2.push(measuredLoadCell);
+			  var measuredBatteryVoltage = data[i]['vbat'];
+              BatteryVoltage2.push(measuredBatteryVoltage);
+			  var measuredElecCond = data[i]['ElecCond'];
+              ElecCond2.push(measuredElecCond);
+		  
+		  }
 		}
 		//saves data into another array so that a backup is left after the original is used by billboard.js(billboard.js uses the pop function which removes data from the array permanently)
 		var temp_Humidity = Humidity;
@@ -341,9 +403,14 @@ $(document).ready(function(){
 		var temp_BatteryVoltage = BatteryVoltage;
 		var temp_ElecCond = ElecCond;
 		
+		var temp_Humidity2 = Humidity2;
+		var temp_TempC2 = TempC2;
+		var temp_LoadCell2 = LoadCell2;
+		var temp_BatteryVoltage2 = BatteryVoltage2;
+		var temp_ElecCond2 = ElecCond2;
 		//console.log(Date_arr);
 		//generate the actual charts
-        var humid_chart = bb.generate({
+        bb.generate({
               bindto: "#humid_line_chart",
 			  
 
@@ -371,7 +438,34 @@ $(document).ready(function(){
 			  }
           });
 		
-		
+		  bb.generate({
+              bindto: "#humid2_line_chart",
+			  
+
+              data: {
+				  "x" : "dates",
+                  type: "line",
+                  columns:
+				  [
+                      Humidity2,
+					  Date_arr
+				 ],
+				
+				  
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d-%H:%M',
+						
+					}
+				}
+				
+			  }
+          });
+		  
 		bb.generate({
               bindto: "#temp_line_chart",
               data: {
@@ -379,6 +473,29 @@ $(document).ready(function(){
                   type: "line",
                   columns: [
                       TempC,
+					  Date_arr
+                  ]
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
+          });
+		  
+		  	bb.generate({
+              bindto: "#temp2_line_chart",
+              data: {
+				  "x" : "dates",
+                  type: "line",
+                  columns: [
+                      TempC2,
 					  Date_arr
                   ]
               },
@@ -418,6 +535,30 @@ $(document).ready(function(){
 			  }
           });
 		  
+		  	bb.generate({
+              bindto: "#loadcell2_line_chart",
+              data: {
+				  "x" : "dates",
+                  type: "line",
+                  columns: [
+                      LoadCell2,
+					  Date_arr
+                  ]
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
+          });
+		  
+		  
 		 bb.generate({
               bindto: "#bv_line_chart",
               data: {
@@ -425,6 +566,29 @@ $(document).ready(function(){
                   type: "line",
                   columns: [
                       BatteryVoltage,
+					  Date_arr
+                  ]
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
+          });
+		  
+		  	 bb.generate({
+              bindto: "#bv_line_chart",
+              data: {
+				  "x" : "dates",
+                  type: "line",
+                  columns: [
+                      BatteryVoltage2,
 					  Date_arr
                   ]
               },
@@ -464,6 +628,28 @@ $(document).ready(function(){
 			  }
           });
          
+		   bb.generate({
+              bindto: "#elec_cond2_line_chart",
+              data: {
+			      "x" : "dates",
+                  type: "line",
+                  columns: [
+                      ElecCond2,
+					  Date_arr
+                  ]
+              },
+			 axis:{
+			  
+			  "x":{
+					type: "timeseries",
+					tick:{
+						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						
+					}
+				}
+				
+			  }
+          });
 
 
 		  //set the map background
