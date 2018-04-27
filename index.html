@@ -742,7 +742,7 @@ $(document).ready(function(){
 			radius: 25
 		  
 		  }
-		  ).addTo(map);
+		  ).addTo(map).bindPopup("Device 1 " + selection + " :" + select_list[select_index]);
 		   var marker2 = L.circle([44.55111111, -123.21555556],{
 		    color: marker_color2,
 			fillColor: marker_color2,
@@ -750,7 +750,7 @@ $(document).ready(function(){
 			radius: 25
 		  
 		  }
-		  ).addTo(map);
+		  ).addTo(map).bindPopup("Device 2 " + selection + " :" + select_list2[select_index]);;
 	
 		   });
 
