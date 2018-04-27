@@ -673,28 +673,35 @@ $(document).ready(function(){
 		
 		  //set the legend fields based on the measurement selected by the user
 		  var marker_color = "blue";
+		  var marker_color2 = "blue";
 		  var select_list;
+		  var select_list2;
 		  var legend_buckets;
 		    switch(selection){
 		  case "temperature":
 				select_list = temp_TempC;
+				select_list2 = temp_TempC2;
 				legend_buckets = [10,20,30];
 				
 				break;
 		  case "humidity":
 				select_list = temp_Humidity;
+				select_list2 = temp_Humidity2;
 				legend_buckets = [30,50,70];
 				break;
 		  case "loadcell":
 				select_list = temp_LoadCell;
+				select_list2 = temp_LoadCell2;
 				legend_buckets = [-1,-.5,0];
 				break;
 		  case "battery_voltage":
 				select_list = temp_BatteryVoltage;
+				select_list2 = temp_BatteryVoltage2;
 				legend_buckets = [3,4,5];
 				break;
 		  case "elec_cond":
 				select_list = temp_ElecCond;
+				select_list2 = temp_ElecCond2;
 				legend_buckets = [200,225,250];
 				break;
 				
@@ -713,6 +720,20 @@ $(document).ready(function(){
 		  else if(select_list[select_index] > legend_buckets[2]){
 				marker_color = marker_color_list[3];
 		  }
+		  
+		  select_index2 = Date_arr2.length - 1;
+		  if(select_list2[select_index] <= legend_buckets[0]){
+				marker_color2 = marker_color_list[0];
+		  }
+		  else if(select_list2[select_index] > legend_buckets[0] && select_list2[select_index] <= legend_buckets[1]){
+				marker_color2 = marker_color_list[1];
+		  }
+		  else if(select_list2[select_index] > legend_buckets[1] && select_list2[select_index] <= legend_buckets[2]){
+				marker_color2 = marker_color_list[2];
+		  }
+		  else if(select_list2[select_index] > legend_buckets[2]){
+				marker_color2 = marker_color_list[3];
+		  }
 		  //add the marker to the map
 		  var marker = L.circle([44.54916667, -123.21583333],{
 		    color: marker_color,
@@ -723,8 +744,8 @@ $(document).ready(function(){
 		  }
 		  ).addTo(map);
 		   var marker2 = L.circle([44.55111111, -123.21555556],{
-		    color: marker_color,
-			fillColor: marker_color,
+		    color: marker_color2,
+			fillColor: marker_color2,
 			fillOpacity: 1,
 			radius: 25
 		  
