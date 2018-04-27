@@ -332,6 +332,7 @@ $(document).ready(function(){
 		  var BatteryVoltage = ["Battery Voltage"];
 		  var ElecCond = ["Electric Conductivity"];
 		  
+		  var Date_arr2 = ["dates"];
 		  var Humidity2 = ["Humidity"];
 		  var TempC2 = ["Temperature(degrees Celsius)"];
 		  var LoadCell2 = ["Load Cell"];
@@ -349,13 +350,17 @@ $(document).ready(function(){
 			  
 			  var ds = data[i]['RTC_time'];
 			  
-			  //grabs every 5th element because of limited space on x-axis
-			//  if(i % 5 == 0){
+			
 			
 				//converts the format used by the spreadsheet to the timeseries format
 				
 			
-				var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
+				
+				
+				
+			  //pushes rest of data
+			  if(data[i]['IDtag'] == "100"){
+			  var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
 				
 				var day = ds.substring(ds.indexOf("/") + 1);
 				
@@ -367,10 +372,6 @@ $(document).ready(function(){
 				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
 			   
 				Date_arr.push(ts);
-				
-				//}
-			  //pushes rest of data
-			  if(data[i]['IDtag'] == "100"){
               var measuredHumidity = data[i]['humidity'];
               Humidity.push(measuredHumidity);
               var measuredTempC = data[i]['temp'];
@@ -383,6 +384,18 @@ $(document).ready(function(){
               ElecCond.push(measuredElecCond);
           }
 		  else if(data[i]['IDtag'] == "200"){
+		  var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
+				
+				var day = ds.substring(ds.indexOf("/") + 1);
+				
+				var hour = ds.substring(0, ds.indexOf(":"));
+				
+				var minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
+		
+					
+				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
+			   
+				Date_arr2.push(ts);
 		   var measuredHumidity = data[i]['humidity'];
               Humidity2.push(measuredHumidity);
               var measuredTempC = data[i]['temp'];
@@ -396,6 +409,7 @@ $(document).ready(function(){
 		  
 		  }
 		}
+		console.log(Date_arr)
 		//saves data into another array so that a backup is left after the original is used by billboard.js(billboard.js uses the pop function which removes data from the array permanently)
 		var temp_Humidity = Humidity;
 		var temp_TempC = TempC;
@@ -448,7 +462,7 @@ $(document).ready(function(){
                   columns:
 				  [
                       Humidity2,
-					  Date_arr
+					  Date_arr2
 				 ],
 				
 				  
@@ -496,7 +510,7 @@ $(document).ready(function(){
                   type: "line",
                   columns: [
                       TempC2,
-					  Date_arr
+					  Date_arr2
                   ]
               },
 			 axis:{
@@ -542,7 +556,7 @@ $(document).ready(function(){
                   type: "line",
                   columns: [
                       LoadCell2,
-					  Date_arr
+					  Date_arr2
                   ]
               },
 			 axis:{
@@ -589,7 +603,7 @@ $(document).ready(function(){
                   type: "line",
                   columns: [
                       BatteryVoltage2,
-					  Date_arr
+					  Date_arr2
                   ]
               },
 			 axis:{
@@ -635,7 +649,7 @@ $(document).ready(function(){
                   type: "line",
                   columns: [
                       ElecCond2,
-					  Date_arr
+					  Date_arr2
                   ]
               },
 			 axis:{
