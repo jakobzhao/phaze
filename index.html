@@ -254,7 +254,7 @@
 
   
   
-var map = L.map('map1').setView([44.21, -122.256], 10);
+var map = L.map('map1').setView([44.55, -123.216], 14);
 var marker_color_list = ["Red", "Orange", "Yellow", "Green"];
 var selection = "humidity"
 
@@ -363,7 +363,7 @@ $(document).ready(function(){
 			  "x":{
 					type: "timeseries",
 					tick:{
-						xFormat:  '%Y-%m-%d_%H:%M:%S',
+						xFormat:  '%Y-%m-%d-%H:%M',
 						
 					}
 				}
@@ -491,16 +491,16 @@ $(document).ready(function(){
 				break;
 		  case "battery_voltage":
 				select_list = temp_BatteryVoltage;
-				legend_buckets = [0,20,40];
+				legend_buckets = [3,4,5];
 				break;
 		  case "elec_cond":
 				select_list = temp_ElecCond;
-				legend_buckets = [0,100,200]
+				legend_buckets = [200,225,250];
 				break;
 				
 		  }
 		  
-		 select_index = 70
+		 select_index = Date_arr.length - 1;
 		  if(select_list[select_index] <= legend_buckets[0]){
 				marker_color = marker_color_list[0];
 		  }
@@ -514,11 +514,19 @@ $(document).ready(function(){
 				marker_color = marker_color_list[3];
 		  }
 		  //add the marker to the map
-		  var marker = L.circle([44.2162295, -122.2519102],{
+		  var marker = L.circle([44.54916667, -123.21583333],{
 		    color: marker_color,
 			fillColor: marker_color,
 			fillOpacity: 1,
-			radius: 1000
+			radius: 25
+		  
+		  }
+		  ).addTo(map);
+		   var marker2 = L.circle([44.55111111, -123.21555556],{
+		    color: marker_color,
+			fillColor: marker_color,
+			fillOpacity: 1,
+			radius: 25
 		  
 		  }
 		  ).addTo(map);
@@ -526,7 +534,7 @@ $(document).ready(function(){
 		   });
 
 
-
+		  
 
 		
 		  legend.onAdd = function() {
@@ -563,17 +571,17 @@ $(document).ready(function(){
 				
 			case "battery_voltage":
 				div.innerHTML += '<b>Battery Voltage</b><br />';
-				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p><40+</p>';
-				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>20-40</p>';
-				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>0-20</p>';
-				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><0</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p>5+</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>4-5</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>3-4</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><3</p>';
 				break;
 			case "elec_cond":
 				div.innerHTML += '<b>Electric Conductivity</b><br />';
-				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p>200+</p>';
-				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>100-200</p>';
-				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>0-100</p>';
-				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><0</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p>250+</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>225-250</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>200-225</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><200</p>';
 				break;
 			
 			}
