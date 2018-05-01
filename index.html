@@ -317,11 +317,11 @@ var legend = L.control({position: 'topright'});
 
 
 //automatically refresh the page every 10 seconds
-$(document).ready(function(){
+
 
 	
 	
-	setInterval(function(){
+	function refresh(){
 			
 		  //console.log(selection);	
 		  //initialize arrays with chart description names
@@ -821,7 +821,12 @@ $(document).ready(function(){
 		  };
 		  legend.addTo(map);
 		  
-		  },10000);
+		  };
+		  
+$(document).ready(function(){
+		//refresh();
+		setInterval(refresh, 300000);
+		  
 });
 		  
 
