@@ -15,7 +15,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json
 
 gc = gspread.authorize(credentials)
 
-#Creates a loop that pulls the data from the spreadsheet into the csv file once every 3 minutes
+#Creates a loop that pulls the data from the spreadsheet into the csv file once every 5 minutes
 
 while True:
 
@@ -35,4 +35,4 @@ while True:
 			print(worksheet.title)
 			
 	print("got here")	
-	time.sleep(180);
+	time.sleep(300);
