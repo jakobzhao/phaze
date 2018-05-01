@@ -310,7 +310,7 @@ document.getElementById("elec_cond_select").addEventListener("click", function()
 
 function select_var(measurement){
 	selection = measurement
-	generate_map()
+	refresh()
 }
 
 var legend = L.control({position: 'topright'});
@@ -677,7 +677,7 @@ var legend = L.control({position: 'topright'});
 
 
 		  //set the map background
-          function generate_map(){
+          
           L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoianJvdGl0aG9yIiwiYSI6ImNqZG5wOXV4NjEwd2ozM280NGZ1Z3ZqM3YifQ.eSmbwYj_2WaWqgBCFOZxuA").addTo(map);
 		 
 		
@@ -820,8 +820,6 @@ var legend = L.control({position: 'topright'});
 			
 		  };
 		  legend.addTo(map);
-		  }
-		  generate_map();
 		   });
 		  };
 		  
