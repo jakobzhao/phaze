@@ -30,9 +30,11 @@
   "dependencies": {
     "bootstrap": "4.0.0",
     "chart.js": "2.7.1",
+    "csv-writer": "^1.0.0",
     "datatables.net-bs4": "1.10.16",
     "express": "^4.16.2",
     "font-awesome": "4.7.0",
+    "google-spreadsheet": "^2.0.3",
     "jquery": "^3.3.1",
     "jquery.easing": "^1.4.1",
     "python-shell": "^0.5.0"
