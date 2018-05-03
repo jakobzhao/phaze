@@ -9,8 +9,8 @@ var http = require("http");
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 var fs = require('fs');
-var spawn = require("child_process").spawn;
-var p = spawn("python", ["py2csv.py"], {detached: true});
+//var spawn = require("child_process").spawn;
+//var p = spawn("python", ["py2csv.py"], {detached: true});
 
 
 

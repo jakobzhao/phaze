@@ -145,7 +145,7 @@
 		<button type="button" id="humidity_select">Humidity</button>
 		<button type="button" id="loadcell_select">Load Cell</button>
 		<button type="button" id="battery_voltage_select">Battery Voltage</button>
-		<button type="button" id="elec_cond_select">Electric Conductivity</button>
+		<!--<button type="button" id="elec_cond_select">Electric Conductivity</button>-->
 	  </div>
 	  <!--
 	  The following code generates the charts, one for each measurement.
@@ -225,7 +225,7 @@
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
- 
+ <!--
     <div class="card-mb-3">
         <div class="card-header">
           <i class="fa fa-area-chart"></i>Device 1 Electric Conductivity</div>
@@ -243,7 +243,7 @@
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
-
+-->
     
       
     </div>
@@ -306,7 +306,7 @@ document.getElementById("temperature_select").addEventListener("click", function
 document.getElementById("humidity_select").addEventListener("click", function(){select_var("humidity");});
 document.getElementById("loadcell_select").addEventListener("click", function(){select_var("loadcell");});
 document.getElementById("battery_voltage_select").addEventListener("click", function(){select_var("battery_voltage");});
-document.getElementById("elec_cond_select").addEventListener("click", function(){select_var("elec_cond");});
+//document.getElementById("elec_cond_select").addEventListener("click", function(){select_var("elec_cond");});
 
 function select_var(measurement){
 	selection = measurement
@@ -330,14 +330,14 @@ var legend = L.control({position: 'topright'});
           var TempC = ["Temperature(degrees Celsius)"];
 		  var LoadCell = ["Load Cell"];
 		  var BatteryVoltage = ["Battery Voltage"];
-		  var ElecCond = ["Electric Conductivity"];
+		//  var ElecCond = ["Electric Conductivity"];
 		  
 		  var Date_arr2 = ["dates"];
 		  var Humidity2 = ["Humidity"];
 		  var TempC2 = ["Temperature(degrees Celsius)"];
 		  var LoadCell2 = ["Load Cell"];
 		  var BatteryVoltage2 =  ["Battery Voltage"];
-		  var ElecCond2 = ["Electric Conductivity"];
+	//	  var ElecCond2 = ["Electric Conductivity"];
 		  
           // data streaming source connector
           var socket = io.connect('/');
@@ -380,8 +380,8 @@ var legend = L.control({position: 'topright'});
               LoadCell.push(measuredLoadCell);
 			  var measuredBatteryVoltage = data[i]['vbat'];
               BatteryVoltage.push(measuredBatteryVoltage);
-			  var measuredElecCond = data[i]['ElecCond'];
-              ElecCond.push(measuredElecCond);
+			//  var measuredElecCond = data[i]['ElecCond'];
+             // ElecCond.push(measuredElecCond);
           }
 		  else if(data[i]['IDtag'] == "200"){
 		  var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
@@ -404,8 +404,8 @@ var legend = L.control({position: 'topright'});
               LoadCell2.push(measuredLoadCell);
 			  var measuredBatteryVoltage = data[i]['vbat'];
               BatteryVoltage2.push(measuredBatteryVoltage);
-			  var measuredElecCond = data[i]['ElecCond'];
-              ElecCond2.push(measuredElecCond);
+			//  var measuredElecCond = data[i]['ElecCond'];
+           //   ElecCond2.push(measuredElecCond);
 		  
 		  }
 		}
@@ -415,13 +415,13 @@ var legend = L.control({position: 'topright'});
 		var temp_TempC = TempC;
 		var temp_LoadCell = LoadCell;
 		var temp_BatteryVoltage = BatteryVoltage;
-		var temp_ElecCond = ElecCond;
+		//var temp_ElecCond = ElecCond;
 		
 		var temp_Humidity2 = Humidity2;
 		var temp_TempC2 = TempC2;
 		var temp_LoadCell2 = LoadCell2;
 		var temp_BatteryVoltage2 = BatteryVoltage2;
-		var temp_ElecCond2 = ElecCond2;
+		//var temp_ElecCond2 = ElecCond2;
 		//console.log(Date_arr);
 		//generate the actual charts
         bb.generate({
@@ -627,6 +627,7 @@ var legend = L.control({position: 'topright'});
 			  }
           });
 
+		  /*
 		   bb.generate({
               bindto: "#elec_cond_line_chart",
               data: {
@@ -675,7 +676,7 @@ var legend = L.control({position: 'topright'});
 			  }
           });
 
-
+		*/
 		  //set the map background
           
           L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoianJvdGl0aG9yIiwiYSI6ImNqZG5wOXV4NjEwd2ozM280NGZ1Z3ZqM3YifQ.eSmbwYj_2WaWqgBCFOZxuA").addTo(map);
@@ -709,11 +710,11 @@ var legend = L.control({position: 'topright'});
 				select_list2 = temp_BatteryVoltage2;
 				legend_buckets = [3,4,5];
 				break;
-		  case "elec_cond":
+		  /*case "elec_cond":
 				select_list = temp_ElecCond;
 				select_list2 = temp_ElecCond2;
 				legend_buckets = [200,225,250];
-				break;
+				break;*/
 				
 		  }
 		  
@@ -807,13 +808,13 @@ var legend = L.control({position: 'topright'});
 				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>3-4</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><3</p>';
 				break;
-			case "elec_cond":
+			/*case "elec_cond":
 				div.innerHTML += '<b>Electric Conductivity</b><br />';
 				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p>250+</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>225-250</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>200-225</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><200</p>';
-				break;
+				break;*/
 			
 			}
 			return div;
