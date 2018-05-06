@@ -181,24 +181,27 @@ document.getElementById("battery_voltage_select").addEventListener("click", func
 
 function select_var(measurement){
 	selection = measurement
-
+	create_geoviz_map()
 }
-function create_geoviz_map(){
+
 var legend = L.control({position: 'topright'});
+
+function create_geoviz_map(){
+
 
 
 			
 		  console.log(selection);	
 	
 			
-		 var Date_arr = ["dates"];	
+	
           var Humidity = ["Humidity"];
           var TempC = ["Temperature(degrees Celsius)"];
 		  var LoadCell = ["Load Cell"];
 		  var BatteryVoltage = ["Battery Voltage"];
 		//  var ElecCond = ["Electric Conductivity"];
 		  
-		  var Date_arr2 = ["dates"];
+		  
 		  var Humidity2 = ["Humidity"];
 		  var TempC2 = ["Temperature(degrees Celsius)"];
 		  var LoadCell2 = ["Load Cell"];
@@ -216,18 +219,7 @@ var legend = L.control({position: 'topright'});
 		  
 		  if(data[i]['IDtag'] == "100"){
 		  
-			 var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
-				
-				var day = ds.substring(ds.indexOf("/") + 1);
-				
-				var hour = ds.substring(0, ds.indexOf(":"));
-				
-				var minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
 		
-					
-				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
-			   
-				Date_arr.push(ts);
 		  
               var measuredHumidity = data[i]['humidity'];
               Humidity.push(measuredHumidity);
@@ -240,18 +232,7 @@ var legend = L.control({position: 'topright'});
 			  }
 			else if(data[i]['IDtag'] == "200"){
 			
-			var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
-				
-				var day = ds.substring(ds.indexOf("/") + 1);
-				
-				var hour = ds.substring(0, ds.indexOf(":"));
-				
-				var minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
-		
-					
-				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
-			   
-				Date_arr2.push(ts);
+			
 			
 			var measuredHumidity = data[i]['humidity'];
               Humidity2.push(measuredHumidity);
@@ -264,7 +245,7 @@ var legend = L.control({position: 'topright'});
 			}
           }
 		
-		 var Date_arr = ["dates"];	
+	
 		var temp_Humidity = Humidity;
 		var temp_TempC = TempC;
 		var temp_LoadCell = LoadCell;
@@ -310,7 +291,7 @@ var legend = L.control({position: 'topright'});
 				
 		  }
 		  
-		 select_index = Date_arr.length - 1;
+		 select_index = Humidity.length - 1;
 		  if(select_list[select_index] <= legend_buckets[0]){
 				marker_color = marker_color_list[0];
 		  }
@@ -324,7 +305,7 @@ var legend = L.control({position: 'topright'});
 				marker_color = marker_color_list[3];
 		  }
 		  
-		  select_index = Date_arr2.length - 1;
+		  select_index = Humidity2.length - 1;
 		  if(select_list2[select_index] <= legend_buckets[0]){
 				marker_color2 = marker_color_list[0];
 		  }
@@ -366,6 +347,7 @@ var legend = L.control({position: 'topright'});
 		  var div;
 		  div = L.DomUtil.create('div', 'legend');
 		  div.innerHTML = '';
+		  //create a legend customized for the measurement selected by the user
 		  switch(selection){
 		    
 			case "temperature":
@@ -400,6 +382,13 @@ var legend = L.control({position: 'topright'});
 				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>3-4</p>';
 				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><3</p>';
 				break;
+			/*case "elec_cond":
+				div.innerHTML += '<b>Electric Conductivity</b><br />';
+				div.innerHTML += '<i style="background: ' + marker_color_list[3] + '; opacity: 0.5"></i><p>250+</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[2] + '; opacity: 0.5"></i><p>225-250</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[1] + '; opacity: 0.5"></i><p>200-225</p>';
+				div.innerHTML += '<i style="background: ' + marker_color_list[0] + '; opacity: 0.5"></i><p><200</p>';
+				break;*/
 			
 			}
 			return div;
@@ -407,7 +396,7 @@ var legend = L.control({position: 'topright'});
 		  };
 		  legend.addTo(map);
 		   });
-		   }
+		   };
 		   $(document).ready(function(){
 				create_geoviz_map();
 				setInterval(create_geoviz_map,300000);
