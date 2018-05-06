@@ -194,14 +194,14 @@ function create_geoviz_map(){
 		  console.log(selection);	
 	
 			
-	
+		  var Date_arr = ["dates"];	
           var Humidity = ["Humidity"];
           var TempC = ["Temperature(degrees Celsius)"];
 		  var LoadCell = ["Load Cell"];
 		  var BatteryVoltage = ["Battery Voltage"];
 		//  var ElecCond = ["Electric Conductivity"];
 		  
-		  
+		  var Date_arr2 = ["dates"];
 		  var Humidity2 = ["Humidity"];
 		  var TempC2 = ["Temperature(degrees Celsius)"];
 		  var LoadCell2 = ["Load Cell"];
@@ -219,7 +219,18 @@ function create_geoviz_map(){
 		  
 		  if(data[i]['IDtag'] == "100"){
 		  
+			  var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
+				
+				var day = ds.substring(ds.indexOf("/") + 1);
+				
+				var hour = ds.substring(0, ds.indexOf(":"));
+				
+				var minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
 		
+					
+				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
+			   
+				Date_arr.push(ts);
 		  
               var measuredHumidity = data[i]['humidity'];
               Humidity.push(measuredHumidity);
@@ -232,7 +243,18 @@ function create_geoviz_map(){
 			  }
 			else if(data[i]['IDtag'] == "200"){
 			
-			
+			var month = ds.substring(ds.indexOf("_") + 1, ds.indexOf("/"));
+				
+				var day = ds.substring(ds.indexOf("/") + 1);
+				
+				var hour = ds.substring(0, ds.indexOf(":"));
+				
+				var minute =  ds.substring(ds.indexOf(":") + 1, ds.indexOf("_"));
+		
+					
+				var ts = new Date(2018,parseInt(month) - 1,parseInt(day),parseInt(hour),parseInt(minute));
+			   
+				Date_arr2.push(ts);
 			
 			var measuredHumidity = data[i]['humidity'];
               Humidity2.push(measuredHumidity);
@@ -291,7 +313,7 @@ function create_geoviz_map(){
 				
 		  }
 		  
-		 select_index = Humidity.length - 1;
+		 select_index = Date_arr.length - 1;
 		  if(select_list[select_index] <= legend_buckets[0]){
 				marker_color = marker_color_list[0];
 		  }
@@ -305,7 +327,7 @@ function create_geoviz_map(){
 				marker_color = marker_color_list[3];
 		  }
 		  
-		  select_index = Humidity2.length - 1;
+		  select_index = Date_arr2.length - 1;
 		  if(select_list2[select_index] <= legend_buckets[0]){
 				marker_color2 = marker_color_list[0];
 		  }
