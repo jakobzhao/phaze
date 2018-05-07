@@ -35,4 +35,4 @@ while True:
 			print(worksheet.title)
 			
 	print("got here")	
-	time.sleep(300);
+	time.sleep(265);

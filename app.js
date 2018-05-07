@@ -11,7 +11,7 @@ var io = require('socket.io')(server);
 var fs = require('fs');
 var spawn = require("child_process").spawn;
 var p = spawn("python", ["py2csv.py"], {detached: true});
-
+var valid_data;
 
 
 
@@ -26,10 +26,14 @@ app.use(express.static(__dirname ));
     io.sockets.on('connection', function (socket) {
 
 			
-
+			
 			var data = fs.readFileSync('sample_data.csv', 'utf8');
 			var data_subsets = $.csv.toObjects(data);
-            socket.emit('join',  data_subsets);
+			if(!(data_subsets.length == 0))
+			{
+				valid_data = data_subsets
+			}
+            socket.emit('join',  valid_data);
 
 
 
