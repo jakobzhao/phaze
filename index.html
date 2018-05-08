@@ -310,7 +310,7 @@ document.getElementById("battery_voltage_select").addEventListener("click", func
 
 function select_var(measurement){
 	selection = measurement
-	refresh()
+	refresh(0)
 }
 
 var legend = L.control({position: 'topright'});
@@ -321,7 +321,7 @@ var legend = L.control({position: 'topright'});
 
 	
 	
-	function refresh(){
+	function refresh(chart_flag){
 			
 		  //console.log(selection);	
 		  //initialize arrays with chart description names
@@ -337,6 +337,8 @@ var legend = L.control({position: 'topright'});
 		  var TempC2 = ["Temperature(degrees Celsius)"];
 		  var LoadCell2 = ["Load Cell"];
 		  var BatteryVoltage2 =  ["Battery Voltage"];
+		  
+		  
 	//	  var ElecCond2 = ["Electric Conductivity"];
 		  
           // data streaming source connector
@@ -409,7 +411,10 @@ var legend = L.control({position: 'topright'});
 		  
 		  }
 		}
-		//console.log(Date_arr)
+		
+				  
+
+
 		//saves data into another array so that a backup is left after the original is used by billboard.js(billboard.js uses the pop function which removes data from the array permanently)
 		var temp_Humidity = Humidity;
 		var temp_TempC = TempC;
@@ -424,6 +429,7 @@ var legend = L.control({position: 'topright'});
 		//var temp_ElecCond2 = ElecCond2;
 		//console.log(Date_arr);
 		//generate the actual charts
+		if(chart_flag == 1){
         bb.generate({
               bindto: "#humid_line_chart",
 			  
@@ -626,7 +632,7 @@ var legend = L.control({position: 'topright'});
 				
 			  }
           });
-
+}
 		  /*
 		   bb.generate({
               bindto: "#elec_cond_line_chart",
@@ -753,7 +759,7 @@ var legend = L.control({position: 'topright'});
 			radius: 25
 		  
 		  }
-		  ).addTo(map).bindPopup("Device 1 " + selection + " :" + select_list[select_index]);
+		  ).addTo(map).bindPopup("Device 1 " + selection + ": " + select_list[select_index]);
 		   var marker2 = L.circle([44.55111111, -123.21555556],{
 		    color: marker_color2,
 			fillColor: marker_color2,
@@ -761,7 +767,7 @@ var legend = L.control({position: 'topright'});
 			radius: 25
 		  
 		  }
-		  ).addTo(map).bindPopup("Device 2 " + selection + " :" + select_list2[select_index]);;
+		  ).addTo(map).bindPopup("Device 2 " + selection + ": " + select_list2[select_index]);;
 	
 		  
 
@@ -821,12 +827,16 @@ var legend = L.control({position: 'topright'});
 			
 		  };
 		  legend.addTo(map);
-		   });
-		  };
+
+		  });
 		  
+		  };
+		   
 $(document).ready(function(){
-		refresh();
-		setInterval(refresh, 300000);
+		refresh(1);
+		
+		setInterval(function(){
+		refresh(1)}, 300000);
 		  
 });
 		  

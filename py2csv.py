@@ -34,5 +34,5 @@ while True:
 			writer.writerows(worksheet.get_all_values())
 			print(worksheet.title)
 			
-	print("got here")	
+		
 	time.sleep(265);
