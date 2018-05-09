@@ -834,7 +834,8 @@ var legend = L.control({position: 'topright'});
 		   
 $(document).ready(function(){
 		refresh(1);
-		
+		setTimeout(function(){
+		refresh(1)}, 20000);
 		setInterval(function(){
 		refresh(1)}, 300000);
 		  
