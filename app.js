@@ -12,7 +12,7 @@ var fs = require('fs');
 var spawn = require("child_process").spawn;
 var p = spawn("python", ["py2csv.py"], {detached: true});
 var valid_data;
-
+var data_subsets;
 
 
 //Listens on port 5040 to avoid collisions with existing processes
@@ -31,7 +31,7 @@ app.use(express.static(__dirname ));
 			
 
 			if(!(data == undefined)){
-			var data_subsets = $.csv.toObjects(data);
+				data_subsets = $.csv.toObjects(data);
 			if(data_subsets != null && data_subsets.length != 0 && data_subsets[0]['IDtag'] == "100" && data_subsets[data_subsets.length - 2]['IDtag'] == '200')
 			{
 				valid_data = data_subsets
