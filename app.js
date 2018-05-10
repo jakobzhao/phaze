@@ -30,9 +30,9 @@ app.use(express.static(__dirname ));
 			var data = fs.readFileSync('sample_data.csv', 'utf8');
 			
 
-			if(!(data == undefined)){
+			if(data != undefined){
 				data_subsets = $.csv.toObjects(data);
-			if(data_subsets != null && data_subsets.length != 0 && data_subsets[0]['IDtag'] == "100" && data_subsets[data_subsets.length - 2]['IDtag'] == '200')
+			if(data_subsets != undefined && data_subsets.length != 0 && data_subsets[0]['IDtag'] == "100" && data_subsets[data_subsets.length - 2]['IDtag'] == '200')
 			{
 				valid_data = data_subsets
 			}
