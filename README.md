@@ -75,9 +75,13 @@ The charts display each data point gathered for each device. There are 2 charts 
 
 The following sections describe how future developers can add to the map.
 
+##### What You Need Installed
+
+In order to be able to work on the web map, you will need to have the following installed: A recent version of python, node.js, npm, and gspread. All of the necessary javascript and css dependencies are in their respective folders.
+
 ##### Adding More Devices
 
-Currently, the web map is set up to display data from only two devices, since that is how many are deployed. In the future, it would be good to add more devices to get a better idea of weather patterns at deployment sites. The information below will guide the user on how to add devices.
+Currently, the web map is set up to display data from only two devices, since that is how many are deployed. In the future, it would be good to add more devices to get a better idea of weather patterns at deployment sites. The information below will guide the user on how to add devices. There is a lot of information, but it is in the same order as the code, so you can choose which section to look at based on your need.
 
 ###### Data file
 
@@ -132,3 +136,42 @@ To generate the map, you would create another select list and another marker col
 You would then assign the marker color based on the most recent measurement obtained from the new device. This has already been done for the first two devices, so you can reuse this and change the select list, select index and marker color to match that of the new device. You would also need to make sure that the date array that you use for the range is specific to the new device.
 
 The final thing that you would need to do is add the new marker to the map. you can reuse the code for the creation of either marker or marker2, but you need to change the color and fillcolor to be specific to the new device. Also, the popup would need to be specific to the device, so for example, if the device that you are adding is the third device, you would make the popup say "Device 3 " + selection + ": " + select_list3[select_index3].
+
+#####Adding a New Measurement
+
+The following steps would need to be taken if you would like to put a new measurement on the web map:
+
+First of all, you would need to look up the exact name of the measurement in the spreadsheet.
+
+###### index.html
+
+First, you would need to add another button above the web map. This can be done with the following code:
+
+<button type="button" id="'insert ID here'">Measurement Name</button>
+
+You would then need to add one chart per device for the new measurement. You can follow the examples of the existing charts for how to do this.
+
+In the javascript, you would need to add the event listener for the new measurement, so when the button is clicked, you would call select_var on the new measurement so that the map is refreshed to show the new data.
+
+You would then create a new array per device for the new measurement. Be sure to initialize it with a string that describes the measurement.
+
+In the for loop that iterates through the data, you would push the data to these arrays. In order to get the measurements from the data, you would use the name of the measurement from the spreadsheet as a reference. So if you wanted to add albedo, you can follow the examples, but instead of 'temp', for example, you would write 'albedo'.   
+
+You would then create a temp array per device for the same reason mentioned in the section for adding new devices, which is that billboard consumes the data from the arrays and deletes it. You would also add the measurement to the section where the arrays are sliced to only contain the dates that the user wants.
+
+Then you can generate one chart per device with billboard for the new measurement. The existing charts can be replicated and only the bindto and columns fields would need to be changed to match the names of  the new arrays.
+
+On the map, you would add another case statement for the new measurement, and in it, you would assign the select lists to the temporary arrays that you created before generating the billboard charts. When assigning the legend buckets, set them up so that each bucket has roughly the same amount of measurements(you may need to spend some time visually examining the data to do this).
+
+Finally, you would need to update the legend. You can add another case statement for the new measurement, and you can reuse the code from any previous case statement, and all you would have to change is the word after case and the first line after the case statement, which is div.innerHTML += ''<b>Your new measurement</b>.
+
+#### Future Improvements
+
+As mentioned above, the most likely improvements would be to add more devices and to add more measurements collected from the devices. However, there are a number of other features that could be added to the map in the future.
+
+##### Slider Bar
+
+Currently, the user can pick the date range that they want based on the spin boxes above the web map. While this is straightforward to use, if the user wants to jump over a large range of data at once, a slider bar may come in handy instead of them having to repeatedly click an arrow or manually type in a date. For this, I would recommend noUiSlider, as it provides an easy to use interface that allows the user to pick dates without worrying if they are out of bounds.
+
+
+
