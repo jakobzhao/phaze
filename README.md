@@ -165,6 +165,10 @@ On the map, you would add another case statement for the new measurement, and in
 
 Finally, you would need to update the legend. You can add another case statement for the new measurement, and you can reuse the code from any previous case statement, and all you would have to change is the word after case and the first line after the case statement, which is div.innerHTML += ''<b>Your new measurement</b>.
 
+##### Testing changes locally
+
+If you want to test out that your changes have worked, you can go to the directory where you are running the code in the terminal window and type node app.js. Then, wait 30 seconds for the webpage to gather data, and then go to the following URL: localhost:5040. 
+
 #### Future Improvements
 
 As mentioned above, the most likely improvements would be to add more devices and to add more measurements collected from the devices. However, there are a number of other features that could be added to the map in the future.
@@ -172,6 +176,10 @@ As mentioned above, the most likely improvements would be to add more devices an
 ##### Slider Bar
 
 Currently, the user can pick the date range that they want based on the spin boxes above the web map. While this is straightforward to use, if the user wants to jump over a large range of data at once, a slider bar may come in handy instead of them having to repeatedly click an arrow or manually type in a date. For this, I would recommend noUiSlider, as it provides an easy to use interface that allows the user to pick dates without worrying if they are out of bounds.
+
+##### MongoDB
+
+Currently, the data is pipelined from a Google Spreadsheet into a csv file and then through node.js onto the web page. This works, but Google Spreadsheet comes with data limits, so as the data becomes extremely large, it could begin to lose integrity. MongoDB has much higher data limits than Google Spreadsheet, so an additional step for the data could be to send it from the Google Spreadsheet into MongoDB, then from there directly into node.js and finally onto the webpage. 
 
 
 
