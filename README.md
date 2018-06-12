@@ -33,6 +33,14 @@ Uses Google API to pull data from the Google Spreadsheet and convert it to a csv
 
 
 
+### Images of Web Map and Charts
+
+![geoviz_screenshot](C:\Users\jaydeep\web_map\geoviz_screenshot.PNG)
+
+
+
+![geoviz_charts_screenshots](C:\Users\jaydeep\web_map\geoviz_charts_screenshots.PNG)
+
 ### Using the Web Map
 
 If you want to access the web map, go to the following URL:
@@ -137,7 +145,7 @@ You would then assign the marker color based on the most recent measurement obta
 
 The final thing that you would need to do is add the new marker to the map. you can reuse the code for the creation of either marker or marker2, but you need to change the color and fillcolor to be specific to the new device. Also, the popup would need to be specific to the device, so for example, if the device that you are adding is the third device, you would make the popup say "Device 3 " + selection + ": " + select_list3[select_index3].
 
-#####Adding a New Measurement
+##### Adding a New Measurement 
 
 The following steps would need to be taken if you would like to put a new measurement on the web map:
 
@@ -163,7 +171,7 @@ Then you can generate one chart per device with billboard for the new measuremen
 
 On the map, you would add another case statement for the new measurement, and in it, you would assign the select lists to the temporary arrays that you created before generating the billboard charts. When assigning the legend buckets, set them up so that each bucket has roughly the same amount of measurements(you may need to spend some time visually examining the data to do this).
 
-Finally, you would need to update the legend. You can add another case statement for the new measurement, and you can reuse the code from any previous case statement, and all you would have to change is the word after case and the first line after the case statement, which is div.innerHTML += ''<b>Your new measurement</b>.
+Finally, you would need to update the legend. You can add another case statement for the new measurement, and you can reuse the code from any previous case statement, and all you would have to change is the word after case and the first line after the case statement, which is div.innerHTML += <b>Your new measurement</b>.
 
 ##### Testing changes locally
 
