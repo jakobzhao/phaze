@@ -35,11 +35,11 @@ Uses Google API to pull data from the Google Spreadsheet and convert it to a csv
 
 ### Images of Web Map and Charts
 
-![geoviz_screenshot](C:\Users\jaydeep\web_map\geoviz_screenshot.PNG)
+![geoviz_screenshot](geoviz_screenshot.PNG)
 
 
 
-![geoviz_charts_screenshots](C:\Users\jaydeep\web_map\geoviz_charts_screenshots.PNG)
+![geoviz_charts_screenshots](geoviz_charts_screenshots.PNG)
 
 ### Using the Web Map
 
